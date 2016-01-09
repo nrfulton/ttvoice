@@ -13,7 +13,7 @@ object TrueTimeBusClient {
       case None => downloadPredications(stop)
     }
     (xml \\ "pre").map(parseStopInfo(_))
-    .filter(_.route == "71D")
+    //.filter(_.route == "71D")
   }
 
   private def downloadPredications(stop: Int) = XML.load(predictionsURL(stop))
