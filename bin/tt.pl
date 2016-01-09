@@ -2,6 +2,7 @@
 use strict;
 use warnings;
 use CGI;
+use Scalar::Util::Numeric qw(isint);
 
 my $c = "java -jar path/to/truetime/jar/tt.jar";
 
@@ -13,6 +14,7 @@ my @requested_stops = split /,/, $stops_csv;
 print qq(Content-type: text/plain\n\n);
 
 foreach my $stop (@requested_stops) {
+  die 'security' unless(isint($stop));
   print "Info for stop number $stop.\n";
   print `$c $stop`;
   print "\n";
