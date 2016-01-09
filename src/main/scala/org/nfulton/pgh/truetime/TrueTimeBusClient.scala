@@ -8,12 +8,12 @@ import scala.xml.{NodeSeq, Elem, XML}
   */
 object TrueTimeBusClient {
   def apply(stop: Int, route: Option[String]) : Seq[BusInfo] = {
-    val xml = route match {
-      case Some(route) => filterByRoute(downloadPredications(stop), route)
-      case None => downloadPredications(stop)
+    val xml = downloadPredications(stop)
+    val parsed = (xml \\ "pre").map(parseStopInfo(_))
+    route match {
+      case Some(route) => parsed.filter(_.route == route)
+      case None        => parsed
     }
-    (xml \\ "pre").map(parseStopInfo(_))
-    //.filter(_.route == "71D")
   }
 
   private def downloadPredications(stop: Int) = XML.load(predictionsURL(stop))

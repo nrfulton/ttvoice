@@ -9,10 +9,11 @@ import sys.process._
   */
 object Main {
   def main(args: Array[String]):Unit = {
-    val stopNumber = args(0) //1177
+    val stopNumber = args(0)
+    val route      = if(args.length == 2) Some(args(1)) else None 
     
     val text = 
-      SpeechTranscriptOutputFormatter(TrueTimeBusClient(stopNumber.toInt, None))
+      SpeechTranscriptOutputFormatter(TrueTimeBusClient(stopNumber.toInt, route))
 
     println(text);
 
